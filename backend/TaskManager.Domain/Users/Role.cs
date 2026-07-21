@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TaskManager.Domain.Tasks
+namespace TaskManager.Domain.Users
 {
-    public class TaskItem
+    public enum Role
     {
+        Admin,
+        User
     }
 }
