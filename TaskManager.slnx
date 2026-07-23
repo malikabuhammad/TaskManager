@@ -4,5 +4,6 @@
     <Project Path="backend/TaskManager.Application/TaskManager.Application.csproj" />
     <Project Path="backend/TaskManager.Domain/TaskManager.Domain.csproj" />
     <Project Path="backend/TaskManager.Infrastructure/TaskManager.Infrastructure.csproj" />
+    <Project Path="backend/TaskManager.Tests/TaskManager.Tests.csproj" />
   </Folder>
 </Solution>
