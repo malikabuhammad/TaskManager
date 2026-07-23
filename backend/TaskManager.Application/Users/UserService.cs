@@ -6,10 +6,11 @@ using TaskManager.Domain.Users;
 namespace TaskManager.Application.Users
 {
     public sealed class UserService(
-        IUserRepository userRepository,
-        IUnitOfWork unitOfWork,
-        IPasswordHasher passwordHasher)
-        : IUserService
+            IUserRepository userRepository,
+            IUnitOfWork unitOfWork,
+            IPasswordHasher passwordHasher,
+            ICurrentUser currentUser)
+            : IUserService
     {
         public async Task<Result<UserDto>> CreateAsync(CreateUserRequest request)
         {
@@ -38,6 +39,11 @@ namespace TaskManager.Application.Users
 
         public async Task<Result<UserDto>> GetByIdAsync(Guid userId)
         {
+            if (!currentUser.IsAdmin && currentUser.UserId != userId)
+            {
+                return UserErrors.AccessDenied;
+            }
+
             var user = await userRepository.GetByIdAsync(userId);
 
             return user is null ? UserErrors.UserNotFound : user.ToDto();
@@ -52,6 +58,11 @@ namespace TaskManager.Application.Users
 
         public async Task<Result<UserDto>> UpdateAsync(Guid userId, UpdateUserRequest request)
         {
+            if (!currentUser.IsAdmin && currentUser.UserId != userId)
+            {
+                return UserErrors.AccessDenied;
+            }
+
             var user = await userRepository.GetByIdAsync(userId);
 
             if (user is null)

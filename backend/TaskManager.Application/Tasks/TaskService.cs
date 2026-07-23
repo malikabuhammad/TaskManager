@@ -7,9 +7,9 @@ namespace TaskManager.Application.Tasks
 {
     public sealed class TaskService(
         ITaskRepository taskRepository,
-        IUserRepository userRepository,
-        IUnitOfWork unitOfWork)
-        : ITaskService
+        IUserRepository userRepository, 
+        IUnitOfWork unitOfWork, 
+        ICurrentUser currentUser) : ITaskService
     {
         public async Task<Result<TaskDto>> CreateAsync(CreateTaskRequest request)
         {
@@ -42,12 +42,29 @@ namespace TaskManager.Application.Tasks
                 return TaskErrors.NotFound;
             }
 
+            if (!currentUser.IsAdmin && task.AssignedUserId != currentUser.UserId)
+            {
+                return TaskErrors.AccessDenied;
+            }
+
             return task.ToDto();
         }
 
         public async Task<Result<List<TaskDto>>> GetAllAsync()
         {
             var tasks = await taskRepository.GetAllAsync();
+
+            return tasks.Select(t => t.ToDto()).ToList();
+        }
+
+        public async Task<Result<List<TaskDto>>> GetMyTasksAsync()
+        {
+            if (currentUser.UserId is not { } userId)
+            {
+                return TaskErrors.AccessDenied;
+            }
+
+            var tasks = await taskRepository.GetByAssignedUserAsync(userId);
 
             return tasks.Select(t => t.ToDto()).ToList();
         }
@@ -85,6 +102,11 @@ namespace TaskManager.Application.Tasks
             if (task is null)
             {
                 return TaskErrors.NotFound;
+            }
+
+            if (!currentUser.IsAdmin && task.AssignedUserId != currentUser.UserId)
+            {
+                return TaskErrors.AccessDenied;
             }
 
             var updateResult = task.UpdateStatus(request.Status);

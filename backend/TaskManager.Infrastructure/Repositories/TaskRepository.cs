@@ -14,6 +14,9 @@ namespace TaskManager.Infrastructure.Repositories
         public Task<List<TaskItem>> GetAllAsync()
             => context.Tasks.AsNoTracking().ToListAsync();
 
+        public Task<List<TaskItem>> GetByAssignedUserAsync(Guid userId)
+            => context.Tasks.AsNoTracking().Where(t => t.AssignedUserId == userId).ToListAsync();
+
         public void Add(TaskItem task)
             => context.Tasks.Add(task);
 

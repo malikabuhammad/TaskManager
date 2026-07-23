@@ -8,6 +8,8 @@ namespace TaskManager.Application.Common.Interfaces
 
         Task<List<TaskItem>> GetAllAsync();
 
+        Task<List<TaskItem>> GetByAssignedUserAsync(Guid userId);
+
         void Add(TaskItem task);
 
         void Remove(TaskItem task);

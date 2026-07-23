@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
+using TaskManager.Application.Auth;
 using TaskManager.Application.Tasks;
 using TaskManager.Application.Users;
 
@@ -11,6 +12,7 @@ namespace TaskManager.Application
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }

@@ -11,6 +11,8 @@ namespace TaskManager.Application.Tasks
 
         Task<Result<List<TaskDto>>> GetAllAsync();
 
+        Task<Result<List<TaskDto>>> GetMyTasksAsync();
+
         Task<Result<TaskDto>> UpdateAsync(Guid taskId, UpdateTaskRequest request);
 
         Task<Result<TaskDto>> UpdateStatusAsync(Guid taskId, UpdateTaskStatusRequest request);
