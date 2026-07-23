@@ -6,6 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 
 using Scalar.AspNetCore;
 
+using Serilog;
+
+using TaskManager.API.Middleware;
 using TaskManager.API.Services;
 using TaskManager.Application;
 using TaskManager.Application.Common.Interfaces;
@@ -13,6 +16,8 @@ using TaskManager.Infrastructure;
 using TaskManager.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -55,6 +60,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();
