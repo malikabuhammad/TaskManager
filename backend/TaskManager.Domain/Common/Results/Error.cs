@@ -1,45 +1,46 @@
  
-namespace TaskManager.Domain.Common.Results;
-
-public readonly record struct Error
+namespace TaskManager.Domain.Common.Results
 {
- 
-    public string Code { get; }
-    public string Description { get; }
+    public readonly record struct Error
+    {
 
-    public ErrorType Type { get; }
+        public string Code { get; }
+        public string Description { get; }
 
-    private Error(string code, string description, ErrorType type)
-    {
-        Code = code;
-        Description = description;
-        Type = type;
-    }
-    public static Error Failure(string code , string description)
-    {
-        return new Error(code, description, ErrorType.Failure);
-    }
+        public ErrorType Type { get; }
 
-    public static Error Validation(string code, string description)
-    {
-        return new Error(code, description, ErrorType.Validation);
-    }
-    public static Error Conflict(string code, string description)
-    {
-        return new Error(code, description, ErrorType.Conflict);
-    }   
+        private Error(string code, string description, ErrorType type)
+        {
+            Code = code;
+            Description = description;
+            Type = type;
+        }
+        public static Error Failure(string code , string description)
+        {
+            return new Error(code, description, ErrorType.Failure);
+        }
 
-    public static Error NotFound(string code, string description)
-    {
-        return new Error(code, description, ErrorType.NotFound);
-    }
-    public static Error Unauthorized(string code, string description)
-    {
-        return new Error(code, description, ErrorType.Unauthorized);
-    }
-    public static Error Forbidden(string code, string description)
-    {
-        return new Error(code, description, ErrorType.Forbidden);
-    }
+        public static Error Validation(string code, string description)
+        {
+            return new Error(code, description, ErrorType.Validation);
+        }
+        public static Error Conflict(string code, string description)
+        {
+            return new Error(code, description, ErrorType.Conflict);
+        }   
 
+        public static Error NotFound(string code, string description)
+        {
+            return new Error(code, description, ErrorType.NotFound);
+        }
+        public static Error Unauthorized(string code, string description)
+        {
+            return new Error(code, description, ErrorType.Unauthorized);
+        }
+        public static Error Forbidden(string code, string description)
+        {
+            return new Error(code, description, ErrorType.Forbidden);
+        }
+
+    }
 }

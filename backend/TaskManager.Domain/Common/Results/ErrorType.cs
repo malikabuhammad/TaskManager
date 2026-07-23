@@ -1,11 +1,12 @@
-namespace TaskManager.Domain.Common.Results;
-
-public enum ErrorType
+namespace TaskManager.Domain.Common.Results
 {
-    Failure,
-    Validation,
-    Conflict,
-    NotFound,
-    Unauthorized,
-    Forbidden,
+    public enum ErrorType
+    {
+        Failure,
+        Validation,
+        Conflict,
+        NotFound,
+        Unauthorized,
+        Forbidden,
+    }
 }

@@ -1,8 +1,9 @@
-namespace TaskManager.Domain.Tasks;
-
-public enum TaskItemStatus
+namespace TaskManager.Domain.Tasks
 {
-    Pending,
-    InProgress,
-    Completed,
+    public enum TaskItemStatus
+    {
+        Pending,
+        InProgress,
+        Completed,
+    }
 }
