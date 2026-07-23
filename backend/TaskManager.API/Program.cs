@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+using Scalar.AspNetCore;
+
 using TaskManager.Application;
 using TaskManager.Infrastructure;
 using TaskManager.Infrastructure.Data;
@@ -21,6 +23,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.MapScalarApiReference();
 
     app.UseSwaggerUI(options =>
         options.SwaggerEndpoint("/openapi/v1.json", "TaskManager API"));
